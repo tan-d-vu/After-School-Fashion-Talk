@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content_block %}
+<title>SEND MESSAGE</title>
+
+<div class="form profile_form">
+<table>
+<tr><td colspan="2" style="text-align:center"> SEND MESSAGE </td></tr>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} 
+        {{form.as_table}}
+        <tr><td colspan="2"><button type="submit"><a>SEND<a> </button></td>
+        </tr>
+    </form>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,301 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Archivo', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+#id_favorite_designers {
+    display: none;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    list-style-type:none;
+    padding:0rem;
+    margin:0rem;
+}
+
+.selected {
+  border-bottom: 1px solid black;
+}
+
+
+.main {
+  margin-top: 3rem;
+  width: 100%;
+  height: 100%;
+}
+
+
+.logo {
+  margin-left: 12px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+}
+
+.logo:hover {
+  border-bottom: 1px solid black;
+}
+
+.menu-container {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  display: block;
+  margin-top: 50px;
+  color: transparent;
+}
+.menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  background: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  margin: auto;
+  border-left: 1px solid black;
+}
+.closeButton {
+  padding-right: 5px;
+  text-align: right;
+  font-size: 30px;
+  display: block;
+  cursor: pointer;
+  color: black;
+}
+.menu a {
+  padding-left: 3px;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  transition: 0.3s;
+}
+.menu a:hover {
+  border-bottom: 1px solid black;
+}
+
+.menu td:hover {
+  cursor: pointer;
+}
+
+.menu table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.menu td {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  height: 50px;
+}
+.menu tr {
+  border-right: none !important;
+}
+/* Header */
+.header {
+  background: white;
+  color: black;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.header table,
+.header td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.header table {
+  table-layout: fixed;
+  width: 100%;
+  border: 1px solid black;
+  border-left: 0px !important;
+  border-right: 0px !important;
+}
+.header td:first-child {
+  border-left: 0px;
+}
+.header td:last-child {
+  border-right: 0px;
+}
+.header td {
+  height: 50px;
+}
+.header input[type=text] {
+  margin: auto;
+  padding-left:5px;
+  width: 95%;
+  border: none;
+  outline: none;
+}
+.form a {
+  text-decoration: none;
+  color: black;
+}
+
+.form {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 50px;
+}
+.form table,
+.form th,
+.form tr,
+.form td {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+.form table,
+.form td,
+.form th {
+  border: 1px solid black;
+  border-top: none;
+}
+
+.form td, 
+.form table {
+  width: 40%;
+}
+.form td {
+  height: 50px;
+  text-align: left;
+}
+.form th {
+  width: 15%;
+}
+.form label {
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.form textarea,
+.form input[type="url"] {
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+}
+.form textarea {
+  height: 94px;
+}
+.form button {
+  background: none;
+  width: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+}
+.form button a:hover,
+.form td a:hover {
+  border-bottom: 1px solid black;
+}
+/* Profile Update/ Create */
+.profile_form td a {
+  text-decoration: none;
+  color: black;
+}
+.profile_form input[name="picture"],
+.profile_form td {
+  text-transform: uppercase;
+}
+
+.profile_form input[id="query"]{
+  height: 50px;
+  border:none;
+  outline: none;
+  width: 100%;
+}
+
+.inbox, .sent, .suggestions {
+  margin: auto;
+  width: 50%;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.suggestion {
+  padding-left: 15px;
+border-top:1px solid black;
+}
+
+.suggestion a {
+  text-decoration: none;
+  color: black;
+}
+
+.suggestion a:hover {
+  cursor: pointer;
+  border-bottom: 1px solid black;
+}
+
+.message_container {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-right: 15px;
+
+  margin: auto;
+  width: 100%;
+  border-top: 1px solid black;
+}
+
+.title {
+  padding-top:1.5rem;
+}
+.title h1, .sub-title p {
+margin-top:0px;
+text-align:center;
+}
+
+.clear-button{
+  border: 1px solid black;
+  background-color: white;
+  outline: none;
+
+}
+
+.login_form input {
+  outline: none;
+  border: none;
+  width: 100%;
+  background-color: none;
+}
+
+.home-title {
+  padding-top: 1.5rem;
+}
+
+.home-title h1{
+  font-size: 4rem;
+}
+
+.home-title h1,.home-sub-title h2 {
+  text-align:center;
+}
+  
+.home-sub-title a {
+  text-decoration: none;
+  color:black;
+}
+.home-sub-title a:hover {
+
+  cursor: pointer;
+  border-bottom: 3px solid black;
+}

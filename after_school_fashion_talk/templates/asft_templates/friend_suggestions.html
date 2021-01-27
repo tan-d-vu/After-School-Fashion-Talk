@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content_block %}
+<title>FRIEND SUGGESTIONS</title>
+
+<div class="title">
+<h1> FRIEND SUGGESTIONS </h1>
+</div>
+
+{% if suggestions %}
+<div class="sub-title">
+<p> CONGRATULATIONS BASED ON YOUR INTERESTS, WE HAVE FOUND SOME MATCHES FOR YOU! </p>
+</div>
+{% else %}
+<div class="sub-title">
+    <p> OOPS! WE WEREN'T ABLE TO FIND ANY MATCHES FOR YOU, BUT HERE ARE SOME... RANDOM PEOPLE? </p>
+    <p> ADD MORE DESIGNERS TO YOUR LIST TO FIND OTHER PEOPLE! </p>
+</div>
+{% endif %}
+
+
+
+{% if suggestions %}
+<div class="suggestions">
+    {% for suggestion in suggestions %}
+    <div class="suggestion">
+
+        <p> {{ suggestion.username }} </p>
+        <p>BIO: {{ suggestion.bio }} </p>
+        <p><a href="{% url 'send_message' suggestion.username %}">SEND A MESSAGE</a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% if random_suggestions %}
+<div class="suggestions">
+    {% for suggestion in random_suggestions %}
+    <div class="suggestion">
+        <p> {{ suggestion.username }} </p>
+                                <p>BIO: {{ suggestion.bio }} </p>
+
+        <p><a href="{% url 'send_message' suggestion.username %}">SEND A MESSAGE</a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock content_block %}
+
+    path('message/send/<username>/', views.MessageCreateView.as_view(), name='send_message'),

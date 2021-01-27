@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content_block %}
+{% if current_user.username == user.username%}
+<div class="form profile_form">
+<table>
+<tr><td colspan="2" style="text-align:center"> PROFILE </td></tr>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} 
+        <tr><th><label for="id_picture">Picture</label></th><td><input type="file" name="picture" accept="image/*" id="id_picture"></td></tr>
+        <tr><th><label for="id_bio">Bio</label></th><td><textarea name="bio" cols="40" rows="10" id="id_bio"></textarea></td></tr>
+        <tr><td colspan="2"><input type="text" id="query" onkeyup="searchFunction()" autocomplete="off" placeholder="Search Designer"></td></tr>
+        <tr><th><label>Favorite designers</label></th><td colspan="2" id="selected_designers"></td></tr>
+        <tr><td colspan="2">{{ form.favorite_designers}}</td></tr>
+        <tr><td colspan="2"><button type="submit"><a>SAVE<a> </button></td></tr>
+    </form>
+</table>
+</div>
+{% endif %}
+{% endblock %}
+
+
+<tr><th><label>Favorite designers:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><ul id="id_favorite_designers">

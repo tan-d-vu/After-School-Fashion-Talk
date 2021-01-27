@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content_block %}
+<title>INBOX</title>
+<div class="title">
+<h1> INBOX </h1>
+</div>
+<div class="inbox">
+    {% if current_user.username == user.username%}
+        {% for message in incoming_messages %}
+
+        <div class ="message_container">
+            <div class="message-info">
+            <a>From: {{message.sender}}</a>
+            <br>
+            <a>Sent at: {{message.created_at}}</a>
+            <br>
+            </div>
+
+            <div id="message{{message.id}}" class="message-content" style="display:none">
+                <p>{{ message.content | linebreaks}}</p>
+            </div>
+
+            <button class="clear-button" id="button{{message.id}}" onclick="(function(){
+                if (document.querySelector('#button{{message.id}}').innerText == 'Open'){
+                    document.querySelector('#message{{message.id}}').style.display='';
+                    document.querySelector('#button{{message.id}}').innerText = 'Close';
+                }
+                else {
+                    document.querySelector('#message{{message.id}}').style.display='none';
+                    document.querySelector('#button{{message.id}}').innerText = 'Open';
+                }
+                
+                })()
+                ">Open</button>
+        </div>
+        
+        </br>
+
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

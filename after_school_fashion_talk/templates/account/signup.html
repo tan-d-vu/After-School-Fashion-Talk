@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content_block %}
+
+<div class="form login_form">
+
+<table>
+    <tr><td style="text-align:center">SIGN UP</td></tr>
+<form method="POST" action="{% url 'account_signup' %}">
+  {% csrf_token %}    
+    <tr><td>{{form.username}}</td></tr>
+    <tr><td>{{form.email}}</td></tr>
+    <tr><td>{{form.password1}}</td></tr>
+    <tr><td>{{form.password2}}</td></tr>
+    <tr>
+      <td><button type="submit"><a>SIGN UP</a></button></td>
+    </tr>
+</form>
+</table>
+</div>
+{% endblock %}

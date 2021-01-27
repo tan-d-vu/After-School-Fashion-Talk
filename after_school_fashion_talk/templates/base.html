@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+{% load static %}
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Location_dot_black.svg/1024px-Location_dot_black.svg.png">
+    <script src="{% static "/asft_core_static/script.js" %}" defer></script>
+    <link rel="stylesheet" href="{% static "/asft_core_static/style.css" %}"/>
+
+</head>
+
+<body>
+    <div class="header" id="myHeader">
+        <table>
+            <td style="text-align:left;"><a class="logo" href="/">AFTER SCHOOL</a></td>
+            <td>
+            </td>
+            <td>
+                <div id="menu-button" style="text-align: right; cursor: pointer; padding-right:5px;">
+                    &#9776;
+                </div>
+            </td>
+        </table>
+    </div>
+
+    <div id="menuContainer" class="menu-container">
+        <div id="menu" class="menu">
+            <table>
+                <tr>
+                    <td>
+                        <span class="closeButton" href="javascript:void(0)" onclick="closeNav()">&times;</span>
+            </td>
+          </tr>
+          {% if not user.is_authenticated %}
+          <tr><td onclick="location.href='{% url 'account_login' %}'"><a href={% url 'account_login' %}>LOGIN</a></td></tr>
+          <tr><td onclick="location.href='{% url 'account_signup' %}'"><a href="{% url 'account_signup' %}">SIGN UP</a></td></tr>
+          <tr><td onclick="location.href='{% url 'home' %}'"><a href="{% url 'home' %}">ABOUT</a></td></tr>
+
+          {% else %}
+          <tr><td onclick="location.href='{% url 'update' user.username%}'"><a href="{% url 'update' user.username %}">PROFILE</a></td></tr>
+          <tr><td onclick="location.href='{% url 'friend_suggestions' user.username %}'"><a href="{% url 'friend_suggestions' user.username %}">FRIEND SUGGESTIONS</a></td></tr>
+
+          <tr><td onclick="location.href='{% url 'inbox' user.username %}'"><a href="{% url 'inbox' user.username %}">INBOX</a></td></tr>
+          <tr><td onclick="location.href='{% url 'sent_messages' user.username %}'"><a href="{% url 'sent_messages' user.username %}">SENT</a></td></tr>
+
+          <tr><td onclick="location.href='{% url 'account_logout' %}'"><a href="{% url 'account_logout' %}">LOGOUT</a></td></tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+
+    <div class="main">
+    {% block content_block %}
+    {% endblock content_block %}
+    </div>
+  </body>
+</html>
