@@ -1,1 +1,1 @@
-web: gunicorn after-school-fashion-talk.wsgi --log-file -
+web: gunicorn after_school_fashion_talk.wsgi --log-file -
