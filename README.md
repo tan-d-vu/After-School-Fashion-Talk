@@ -1,2 +1,0 @@
-# After School Fashion Talk
- 
