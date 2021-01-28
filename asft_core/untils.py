@@ -29,11 +29,17 @@ def get_random_suggestions():
     suggestion_count = 0
     count = Profile.objects.count()
     
-    while suggestion_count <= 10:
-        suggestion = Profile.objects.all()[randint(0, count-1)]
-        if suggestion not in suggestions:
-            suggestions.append(suggestion)
-            suggestion_count+=1
+    if count <= 10:
+        for i in range(0, count-1):
+            suggestions.append(Profile.objects.all()[i])
+
+    # Get 10 random suggestions
+    else:
+        while suggestion_count <= 10:
+            suggestion = Profile.objects.all()[randint(0, count-1)]
+            if suggestion not in suggestions:
+                suggestions.append(suggestion)
+                suggestion_count+=1
 
     return suggestions
 
