@@ -35,7 +35,7 @@ def friend_suggestions_view(request, username):
     suggestions = get_friend_suggestions(user)
 
     if len(suggestions)==0:
-        random_suggestions = get_random_suggestions()
+        random_suggestions = get_random_suggestions(user.username)
         
 
     return render(request, 'asft_templates/friend_suggestions.html', {'suggestions' : suggestions, 'random_suggestions': random_suggestions, 'designer_list':brand_set.brand_choice})

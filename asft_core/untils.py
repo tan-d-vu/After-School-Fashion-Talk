@@ -24,14 +24,16 @@ def __short_list_compare(current_fav_designers, profile_fav_designers):
     else:
         return "Not Matched"
 
-def get_random_suggestions():
+def get_random_suggestions(username):
     suggestions = []
     suggestion_count = 0
     count = Profile.objects.count()
     
     if count <= 10:
         for i in range(0, count-1):
-            suggestions.append(Profile.objects.all()[i])
+            suggestion = Profile.objects.all()[i]
+            if suggestion.username != username:
+                suggestions.append(suggestion)
 
     # Get 10 random suggestions
     else:
