@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content_block %}
+<title>PROFILE</title>
+
+<div class="title">
+<h1> PROFILE </h1>
+</div>
+<img class="avatar" src="{{profile.picture.url }}" alt="logo">
+<h1>{{ profile.username }}</h1>
+<p>Bio: {{ profile.bio }}</p>
+{% for desginer in designer_list %}
+{% if not forloop.last %}
+{{desginer.1}},
+{% endif %}
+{% if forloop.last %}
+{{desginer.1}}.
+{% endif %}
+{% endfor %}
+
+{% endblock content_block %}
+

@@ -22,11 +22,25 @@
 {% if suggestions %}
 <div class="suggestions">
     {% for suggestion in suggestions %}
+    {% comment %}
+    suggestion = [profile, [list of common designers]]
+    {% endcomment %}
     <div class="suggestion">
 
-        <p> {{ suggestion.username }} </p>
-        <p>BIO: {{ suggestion.bio }} </p>
-        <p><a href="{% url 'send_message' suggestion.username %}">SEND A MESSAGE</a></p>
+        <p> {{ suggestion.0.username }} </p>
+        <p>BIO: {{ suggestion.0.bio }} </p>
+        <p>DESIGNERS YOU BOTH LOVE:
+            {% for designer in suggestion.1 %}
+            {% if not forloop.last %}
+                {{designer.1}},
+            {% endif %}
+            {% if forloop.last %}
+                {{designer.1}}.
+            {% endif %}
+            {% endfor %}
+        </p>
+        <p><a href="{% url 'send_message' suggestion.0.username %}">SEND A MESSAGE</a></p>
+
     </div>
     {% endfor %}
 </div>

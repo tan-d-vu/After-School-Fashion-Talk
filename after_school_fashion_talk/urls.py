@@ -29,6 +29,8 @@ urlpatterns = [
     path('message/<username>/inbox/', views.InboxView.as_view(), name='inbox'),
     path('message/<username>/sent/', views.SentMessageView.as_view(), name='sent_messages'),
     path('<username>/friends/suggestions/', views.friend_suggestions_view, name='friend_suggestions'),
+    
+    path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
 
 
 

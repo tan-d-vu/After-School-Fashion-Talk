@@ -38,33 +38,38 @@ window.addEventListener("click", function() {
         }
         /* If not already selected, add to list */
         else {
-            /* Add .selected to its class */
-            event.target.classList.add("selected");
-
-            let designerId = event.target.getAttribute("for");
-
-            /* Create desginer's button */
-            let selectedDesignerButton = document.createElement('button');
-            let selectedButtonId = "selected-" + designerId;
-            selectedDesignerButton.innerText = event.target.innerText;
-
-            selectedDesignerButton.setAttribute('id', selectedButtonId);
-
-            /* Clicking the button removes the designer */
-            selectedDesignerButton.onclick = function() {
-                /* Removing .selected from class and uncheck */
-                document.querySelector("[for='" + designerId + "']").classList.remove("selected");
-                document.querySelector("#" + designerId).checked = false;
-
-                /* Removing the selectedDesignerButton */
-                document.querySelector("#" + selectedButtonId).remove();
-            }
-
-            document.getElementById("selected_designers").appendChild(selectedDesignerButton);
-
+            createButton(event);
         }
     }
 })
+
+function createButton(event) {
+    /* Add .selected to the desginer's class */
+    event.target.classList.add("selected");
+
+    let designerId = event.target.getAttribute("for");
+
+    /* Create desginer's button */
+    let selectedDesignerButton = document.createElement('button');
+    let selectedButtonId = "selected-" + designerId;
+    selectedDesignerButton.innerText = event.target.innerText;
+
+    selectedDesignerButton.setAttribute('id', selectedButtonId);
+
+    /* Clicking the button removes the designer */
+    selectedDesignerButton.onclick = function() {
+        /* Removing .selected from class and uncheck */
+        document.querySelector("[for='" + designerId + "']").classList.remove("selected");
+        document.querySelector("#" + designerId).checked = false;
+
+        /* Removing the selectedDesignerButton */
+        document.querySelector("#" + selectedButtonId).remove();
+    }
+
+    document.getElementById("selected_designers").appendChild(selectedDesignerButton);
+
+}
+
 
 
 function closeNav() {
@@ -85,3 +90,29 @@ menuButton.addEventListener("click", function() {
     document.getElementById("menu").style.width = "33.333333333%";
     document.getElementById("menuContainer").style.width = "100%";
 });
+
+window.onload = function() {
+    let existingButtons = document.querySelectorAll('.existing_designer');
+
+    /* Adding the onclick function on the existing buttons
+    so that clicking the button removes the designer from the selected list.
+    */
+   for (var i = 0; i < existingButtons.length; i++) {
+        /* Getting the id of the checkbox after "selected-" */
+        let button = existingButtons[i]
+        let designerId = button.id.substring(9);
+
+        /* Mark the check box, add class .selected */
+        document.querySelector("#" + designerId).checked = true;
+        document.querySelector("[for='" + designerId + "']").classList.add("selected");
+
+        button.addEventListener('click', function() {
+            /* Removing .selected from class and uncheck */
+            document.querySelector("[for='" + designerId + "']").classList.remove("selected");
+            document.querySelector("#" + designerId).checked = false;
+            /* Removing the button */
+            button.remove();
+        })
+    }
+
+}

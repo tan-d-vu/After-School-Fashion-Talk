@@ -12,8 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 from asft_core.models import Profile, Message
 from asft_core.forms import ProfileForm, MessageForm
-from .untils import get_friend_suggestions, get_random_suggestions
-from . import brand_set
+from .untils import get_friend_suggestions, get_random_suggestions, designer_list_conversion, index_conversion
 # Create your views here.
 
 # Profile Update
@@ -38,7 +37,8 @@ def friend_suggestions_view(request, username):
         random_suggestions = get_random_suggestions(user.username)
         
 
-    return render(request, 'asft_templates/friend_suggestions.html', {'suggestions' : suggestions, 'random_suggestions': random_suggestions, 'designer_list':brand_set.brand_choice})
+    return render(request, 'asft_templates/friend_suggestions.html', {'suggestions' : suggestions,
+                    'random_suggestions': random_suggestions})
 
 
 @login_required()
@@ -53,6 +53,9 @@ def profile_update(request, username):
     profile_form = ProfileForm({'picture': profile.picture,
                                 'bio': profile.bio, 'fav_designer': profile.favorite_designers})
 
+    designer_list = designer_list_conversion(profile.favorite_designers)
+    designer_list = index_conversion(designer_list)
+
     if request.method == 'POST':
         profile_form = ProfileForm(
             request.POST, request.FILES, instance=profile)
@@ -63,7 +66,23 @@ def profile_update(request, username):
         else:
             print(profile_form.errors)
 
-    return render(request, 'asft_templates/profile_create.html', {'form': profile_form, 'current_user': user, })
+    return render(request, 'asft_templates/profile_create.html', {'form': profile_form, 
+                    'current_user': user, 'designer_list': designer_list })
+
+class ProfileView(LoginRequiredMixin, DetailView):
+    template_name = 'asft_templates/profile_view.html'
+    context_object_name = 'profile'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'    
+    model = Profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        designer_list = designer_list_conversion(self.object.favorite_designers)
+        designer_list = index_conversion(designer_list)
+        context['designer_list'] = designer_list
+
+        return context
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
@@ -118,5 +137,4 @@ class SentMessageView(LoginRequiredMixin, ListView):
         current_user = get_object_or_404(User, username = self.kwargs['username'])
         context['current_user']= current_user
         return context
-
 

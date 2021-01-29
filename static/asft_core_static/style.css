@@ -299,3 +299,11 @@ text-align:center;
   cursor: pointer;
   border-bottom: 3px solid black;
 }
+
+.avatar {
+  display:block;
+margin: auto;
+width: 10em;
+height: 10em;
+border-radius: 50%;
+}

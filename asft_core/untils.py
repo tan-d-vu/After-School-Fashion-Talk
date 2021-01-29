@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
 from asft_core.models import Profile
-from difflib import SequenceMatcher
 from random import randint
+from . import brand_set
 
-def __designer_list_conversion(designer_list):
+def designer_list_conversion(designer_list):
     # Converting string of int to list of int (index of designer in brand_set)
     designer_list = str(designer_list)[1:]
     designer_list = designer_list[:-1]
@@ -12,23 +12,22 @@ def __designer_list_conversion(designer_list):
         designer_list[i]=int(designer_list[i])
     return designer_list
 
-def __short_list_compare(current_fav_designers, profile_fav_designers):
-    # To compare list of less than 10 designers
-    common_designers = []
-    for designer in profile_fav_designers:
-        if designer in current_fav_designers:
-            common_designers.append(designer)
-
-    if len(common_designers) >= round(len(current_fav_designers)/0.5):
-        return "Matched"
-    else:
-        return "Not Matched"
+def index_conversion(designer_list):
+    # From list of index to actual desginer names
+    i = 0
+    for index in designer_list:
+        designer_list[i] = brand_set.brand_choice[index]
+        i +=1
+    
+    return designer_list
 
 def get_random_suggestions(username):
+    # Get 10 random sugesstions
     suggestions = []
     suggestion_count = 0
     count = Profile.objects.count()
     
+    # If there are less than 10 users, recommend everyone 
     if count <= 10:
         for i in range(0, count-1):
             suggestion = Profile.objects.all()[i]
@@ -47,45 +46,45 @@ def get_random_suggestions(username):
 
 def get_friend_suggestions(user):
     suggestions = []
+    
     suggestion_count = 0
+
     # Getting arg user's fav designers
     current_fav_designers =  Profile.objects.get(username=user.username).favorite_designers
-    current_fav_designers = __designer_list_conversion(current_fav_designers)
+    current_fav_designers = designer_list_conversion(current_fav_designers)
     
+    current_fav_designers_count = len(current_fav_designers)
+    # Getting all profiles, loop through to find matches
     all_profiles = Profile.objects.all()
 
-    # If user's fav designers list is short (less than 10), use __short_list_compare__
-    if len(current_fav_designers) <= 10:
-        for profile in all_profiles:
-            if profile.user != user:
-                profile_fav_designers = profile.favorite_designers
-                profile_fav_designers = __designer_list_conversion(profile_fav_designers)
-               
-                if __short_list_compare(current_fav_designers, profile_fav_designers)=="Matched":
-                    suggestions.append(profile)
-                    suggestion_count += 1
-                
-                # Getting 10 suggestions = done
-                if suggestion_count == 10:
-                    break
+    for profile in all_profiles:
+        if profile.user != user:
+            # New suggestion+ common designer for every user
+            suggestion = []
+            common_designer = []
 
-    else:
-        for profile in all_profiles:
-            if profile.user != user:
-                profile_fav_designers = profile.favorite_designers
-                profile_fav_designers = __designer_list_conversion(profile_fav_designers)
-                
-                if len(profile_fav_designers) <= 10:
-                    if __short_list_compare(current_fav_designers, profile_fav_designers)=="Matched":
-                        suggestions.append(profile)
-                        suggestion_count += 1
-                else:
-                    similarity = SequenceMatcher(None, current_fav_designers, profile_fav_designers)
-                    if similarity.ratio() > 0.03:
-                        suggestions.append(profile)
-                        suggestion_count += 1
+            # Getting current profile's fav designers    
+            profile_fav_designers = profile.favorite_designers
+            profile_fav_designers = designer_list_conversion(profile_fav_designers)
+        
+            # Compare to arg user's fav designers
+            for designer in current_fav_designers:
+                if designer in profile_fav_designers:
+                    # Add the common designer
+                    common_designer.append(designer)
 
-                if suggestion_count == 10:
-                    break
+            # Add to suggestion if the common fav designers is 40% or more
+            if len(common_designer)/current_fav_designers_count >= 0.4:
+                common_designer = index_conversion(common_designer)
+                # Add to suggestion list
+                suggestion.append(profile)
+                suggestion.append(common_designer)
+                
+                # Add the suggestion list to suggestions
+                suggestions.append(suggestion)
+                suggestion_count += 1
+            
+            if suggestion_count == 10:
+                break
 
     return suggestions
