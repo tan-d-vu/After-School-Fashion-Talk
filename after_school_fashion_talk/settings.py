@@ -174,3 +174,11 @@ MEDIA_URL = '/media/'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Cloud storage
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hkvig62mo',
+    'API_KEY': '586384657375592',
+    'API_SECRET': 'XiCDvQkQ_1ZclbbK2Ywk-UxP-LE',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
