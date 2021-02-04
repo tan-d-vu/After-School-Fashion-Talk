@@ -8,7 +8,7 @@ class Profile(models.Model):
     # One(Profile) to one(User) relationship
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=128, unique=True)
-    picture = models.ImageField(upload_to='media_pfp', default='default-avatar.png')
+    picture = models.ImageField(upload_to='media_pfp', default='default-avatar_qdntfa.png')
     bio = models.TextField(blank=True)
     favorite_designers= models.TextField(blank=False)
 
