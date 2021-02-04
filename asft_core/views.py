@@ -23,6 +23,7 @@ def home(request):
 
 @login_required()
 def friend_suggestions_view(request, username):
+    """ Show either friend suggestions from common designers or randomly """
     random_suggestions = []
     suggestions = []
     
@@ -43,6 +44,7 @@ def friend_suggestions_view(request, username):
 
 @login_required()
 def profile_update(request, username):
+    """ Update profile info """
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -61,8 +63,7 @@ def profile_update(request, username):
             request.POST, request.FILES, instance=profile)
         if profile_form.is_valid():
             profile_form.save(commit=True)
-            return redirect('home')
-            # return redirect('view_profile', user.username)
+            return redirect('profile', user.username)
         else:
             print(profile_form.errors)
 
@@ -70,10 +71,11 @@ def profile_update(request, username):
                     'current_user': user, 'designer_list': designer_list })
 
 class ProfileView(LoginRequiredMixin, DetailView):
+    """ Viewing profile infomation """
     template_name = 'asft_templates/profile_view.html'
     context_object_name = 'profile'
     slug_field = 'username'
-    slug_url_kwarg = 'username'    
+    slug_url_kwarg = 'username'
     model = Profile
 
     def get_context_data(self, **kwargs):

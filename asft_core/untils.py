@@ -5,12 +5,15 @@ from . import brand_set
 
 def designer_list_conversion(designer_list):
     # Converting string of int to list of int (index of designer in brand_set)
-    designer_list = str(designer_list)[1:]
-    designer_list = designer_list[:-1]
-    designer_list = list(designer_list.split(", "))
-    for i in range(0, len(designer_list)):
-        designer_list[i]=int(designer_list[i])
+    if designer_list:
+        designer_list = str(designer_list)[1:]
+        designer_list = designer_list[:-1]
+        designer_list = list(designer_list.split(", "))
+        for i in range(0, len(designer_list)):
+            designer_list[i]=int(designer_list[i])
+    
     return designer_list
+    
 
 def index_conversion(designer_list):
     # From list of index to actual desginer names

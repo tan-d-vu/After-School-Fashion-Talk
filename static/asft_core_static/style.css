@@ -256,6 +256,11 @@ border-top:1px solid black;
   border-top: 1px solid black;
 }
 
+.message-content {
+  word-wrap: break-word;
+}
+
+
 .title {
   padding-top:1.5rem;
 }
